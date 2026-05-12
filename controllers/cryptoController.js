@@ -30,6 +30,7 @@ exports.getNewCryptos = async (req, res) => {
 exports.addCrypto = async (req, res) => {
   try {
     const { name, symbol, price, image, change24h } = req.body;
+    const change24hValue = change24h !== undefined ? change24h : req.body['24h Change'];
 
     if (!name || !symbol || price === undefined) {
       return res.status(400).json({ message: 'Please provide name, symbol and price fields.' });
@@ -40,7 +41,7 @@ exports.addCrypto = async (req, res) => {
       symbol,
       price,
       image,
-      change24h
+      change24h: change24hValue
     });
 
     await crypto.save();

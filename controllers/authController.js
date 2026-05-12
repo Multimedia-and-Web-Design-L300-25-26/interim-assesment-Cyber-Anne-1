@@ -65,7 +65,7 @@ exports.login = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000 // 1 day
     });
 
-    res.json({ message: 'Logged in successfully', token, user: { id: user._id, name: user.name, email: user.email } });
+    res.json({ message: 'Logged in successfully', token, user });
   } catch (error) {
     res.status(500).json({ message: 'Server error.', error: error.message });
   }

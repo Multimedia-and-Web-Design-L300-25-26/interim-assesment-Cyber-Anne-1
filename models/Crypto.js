@@ -14,11 +14,27 @@ const cryptoSchema = new mongoose.Schema({
     required: true
   },
   image: {
-    type: String
+    type: String,
+    default: ""
   },
   change24h: {
-    type: Number
+    type: Number,
+    default: 0
   }
-}, { timestamps: true });
+}, { 
+  timestamps: true,
+  toJSON: {
+    virtuals: true,
+    versionKey: false,
+    transform: function (doc, ret) {
+      ret.id = ret._id;
+    }
+  },
+  toObject: { virtuals: true }
+});
+
+cryptoSchema.virtual('24h Change').get(function() {
+  return this.change24h;
+});
 
 module.exports = mongoose.model('Crypto', cryptoSchema);
